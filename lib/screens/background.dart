@@ -37,6 +37,7 @@ class Background extends StatelessWidget {
             child: SvgPicture.asset(
               "images/background-image.svg",
               height: size.height,
+              clipBehavior: Clip.hardEdge,
             ),
           ),
           Positioned(

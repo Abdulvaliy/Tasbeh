@@ -1,5 +1,6 @@
+// ignore_for_file: unused_import
+
 import 'package:flutter/material.dart';
-import 'package:tasbeeh/data/constants.dart';
 
 OutlineInputBorder myInputBorder() {
   return const OutlineInputBorder(

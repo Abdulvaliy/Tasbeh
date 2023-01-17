@@ -43,7 +43,6 @@ class _SettingScreenState extends State<SettingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     final dataModelList = Provider.of<DataClass>(context);
     String? selectedLanguage = dataModelList.language;
     return Scaffold(
@@ -70,7 +69,6 @@ class _SettingScreenState extends State<SettingScreen> {
           TextButton(
             onPressed: () {
               if (_leapValue == 150) {
-                print("Leap value is: $_leapValue");
               } else {
                 dataModelList.updateSelectedLeap(_leapValue!);
               }
@@ -91,87 +89,35 @@ class _SettingScreenState extends State<SettingScreen> {
           )
         ],
       ),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Column(
-          children: [
-            Card(
-              elevation: 2,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        languages['count']![selectedLanguage],
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            children: [
+              Card(
+                elevation: 2,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          languages['count']![selectedLanguage],
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Radio(
-                          activeColor: kMainColor,
-                          value: 11,
-                          groupValue: _leapValue,
-                          onChanged: (value) {
-                            setState(() {
-                              _leapValue = value;
-                            });
-                          },
-                        ),
-                        const Text("11"),
-                        SizedBox(width: 15),
-                        Radio(
-                          activeColor: kMainColor,
-                          value: 33,
-                          groupValue: _leapValue,
-                          onChanged: (value) {
-                            setState(() {
-                              _leapValue = value;
-                            });
-                          },
-                        ),
-                        const Text("33"),
-                        SizedBox(width: 15),
-                        Radio(
-                          activeColor: kMainColor,
-                          value: 99,
-                          groupValue: _leapValue,
-                          onChanged: (value) {
-                            setState(() {
-                              _leapValue = value;
-                            });
-                          },
-                        ),
-                        const Text("99"),
-                        SizedBox(width: 15),
-                        Radio(
-                          activeColor: kMainColor,
-                          value: 100,
-                          groupValue: _leapValue,
-                          onChanged: (value) {
-                            setState(() {
-                              _leapValue = value;
-                            });
-                          },
-                        ),
-                        const Text("100"),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 40),
-                      child: Row(
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Radio(
                             activeColor: kMainColor,
-                            value: customValue,
+                            value: 11,
                             groupValue: _leapValue,
                             onChanged: (value) {
                               setState(() {
@@ -179,248 +125,302 @@ class _SettingScreenState extends State<SettingScreen> {
                               });
                             },
                           ),
-                          Text(languages['custom']![selectedLanguage]),
-                          const SizedBox(width: 8),
-                          SizedBox(
-                            width: 50,
-                            child: _leapValue == customValue
-                                ? CupertinoTextField(
-                                    onChanged: (value) {
-                                      _leapValue = int.tryParse(value);
-                                    },
-                                    controller: customController,
-                                    keyboardType: TextInputType.number,
-                                    decoration: BoxDecoration(
-                                      borderRadius: const BorderRadius.all(Radius.circular(10)),
-                                      border: Border.all(color: kMainColor),
-                                    ),
-                                  )
-                                : null,
+                          const Text("11"),
+                          const SizedBox(width: 15),
+                          Radio(
+                            activeColor: kMainColor,
+                            value: 33,
+                            groupValue: _leapValue,
+                            onChanged: (value) {
+                              setState(() {
+                                _leapValue = value;
+                              });
+                            },
+                          ),
+                          const Text("33"),
+                          const SizedBox(width: 15),
+                          Radio(
+                            activeColor: kMainColor,
+                            value: 99,
+                            groupValue: _leapValue,
+                            onChanged: (value) {
+                              setState(() {
+                                _leapValue = value;
+                              });
+                            },
+                          ),
+                          const Text("99"),
+                          const SizedBox(width: 15),
+                          Radio(
+                            activeColor: kMainColor,
+                            value: 100,
+                            groupValue: _leapValue,
+                            onChanged: (value) {
+                              setState(() {
+                                _leapValue = value;
+                              });
+                            },
+                          ),
+                          const Text("100"),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 40),
+                        child: Row(
+                          children: [
+                            Radio(
+                              activeColor: kMainColor,
+                              value: customValue,
+                              groupValue: _leapValue,
+                              onChanged: (value) {
+                                setState(() {
+                                  _leapValue = value;
+                                });
+                              },
+                            ),
+                            Text(languages['custom']![selectedLanguage]),
+                            const SizedBox(width: 8),
+                            SizedBox(
+                              width: 50,
+                              child: _leapValue == customValue
+                                  ? CupertinoTextField(
+                                      onChanged: (value) {
+                                        _leapValue = int.tryParse(value);
+                                      },
+                                      controller: customController,
+                                      keyboardType: TextInputType.number,
+                                      decoration: BoxDecoration(
+                                        borderRadius: const BorderRadius.all(Radius.circular(10)),
+                                        border: Border.all(color: kMainColor),
+                                      ),
+                                    )
+                                  : null,
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 5),
+              Card(
+                elevation: 2,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          languages['sound']![selectedLanguage],
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Icon(CupertinoIcons.volume_mute, color: kMainColor),
+                          Expanded(
+                            child: SizedBox(
+                              // width: size.width - 10,
+                              child: CupertinoSlider(
+                                activeColor: kMainColor,
+                                min: 0,
+                                max: 10,
+                                divisions: 10,
+                                value: _volumeValue,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _volumeValue = value;
+                                  });
+                                },
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 5),
+                          Icon(
+                            CupertinoIcons.volume_up,
+                            color: kMainColor,
+                            size: 28,
                           ),
                         ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 5),
+              Card(
+                elevation: 2,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ListTile(
+                        leading: Icon(Icons.vibration, color: kMainColor),
+                        title: Text(
+                          languages['vibration']![selectedLanguage],
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        trailing: CupertinoSwitch(
+                          activeColor: kMainColor,
+                          value: _vibrationValue,
+                          onChanged: (bool value) {
+                            setState(() {
+                              _vibrationValue = value;
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 5),
+              Card(
+                elevation: 2,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: ListTile(
+                        leading: Icon(CupertinoIcons.globe, color: kMainColor),
+                        title: Text(
+                          languages['language']![selectedLanguage],
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ),
+                    ListTile(
+                      leading: Radio(
+                        activeColor: kMainColor,
+                        value: "en",
+                        groupValue: _languageValue,
+                        onChanged: (value) {
+                          setState(() {
+                            _languageValue = value;
+                          });
+                        },
+                      ),
+                      title: Text(languages['english']![selectedLanguage]),
+                    ),
+                    ListTile(
+                      leading: Radio(
+                        activeColor: kMainColor,
+                        value: "uz",
+                        groupValue: _languageValue,
+                        onChanged: (value) {
+                          setState(() {
+                            _languageValue = value;
+                          });
+                        },
+                      ),
+                      title: Text(languages['uzbek']![selectedLanguage]),
+                    ),
+                    ListTile(
+                      leading: Radio(
+                        activeColor: kMainColor,
+                        value: "tr",
+                        groupValue: _languageValue,
+                        onChanged: (value) {
+                          setState(() {
+                            _languageValue = value;
+                          });
+                        },
+                      ),
+                      title: Text(languages['turkish']![selectedLanguage]),
+                    ),
+                    ListTile(
+                      leading: Radio(
+                        activeColor: kMainColor,
+                        value: "ru",
+                        groupValue: _languageValue,
+                        onChanged: (value) {
+                          setState(() {
+                            _languageValue = value;
+                          });
+                        },
+                      ),
+                      title: Text(languages['russian']![selectedLanguage]),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 3,
+                      child: Text(
+                        languages['locate']![selectedLanguage],
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                    // Expanded(child: Container()),
+                    Expanded(
+                      flex: 1,
+                      child: CupertinoButton(
+                        padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
+                        color: kMainColor, // CupertinoColors.activeBlue,
+                        onPressed: () {
+                          setState(() {
+                            _onLeftValue = !_onLeftValue;
+                          });
+                        },
+                        child: Text(
+                          _onLeftValue
+                              ? languages['left']![selectedLanguage]
+                              : languages['right']![selectedLanguage],
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
                       ),
                     )
                   ],
                 ),
               ),
-            ),
-            const SizedBox(height: 5),
-            Card(
-              elevation: 2,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        languages['sound']![selectedLanguage],
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        Icon(CupertinoIcons.volume_mute, color: kMainColor),
-                        Expanded(
-                          child: SizedBox(
-                            // width: size.width - 10,
-                            child: CupertinoSlider(
-                              activeColor: kMainColor,
-                              min: 0,
-                              max: 10,
-                              divisions: 10,
-                              value: _volumeValue,
-                              onChanged: (value) {
-                                setState(() {
-                                  _volumeValue = value;
-                                });
-                              },
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 5),
-                        Icon(
-                          CupertinoIcons.volume_up,
-                          color: kMainColor,
-                          size: 28,
-                        ),
-                      ],
-                    ),
-                  ],
+              // CupertinoSlidingSegmentedControl(
+              //   children: const {
+              //     true: Text("LEFT"),
+              //     false: Text("RIGHT"),
+              //   },
+              //   groupValue: _onLeftValue,
+              //   onValueChanged: (value) {
+              //     setState(() {
+              //       _onLeftValue = value!;
+              //     });
+              //   },
+              // ),
+              const SizedBox(height: 50),
+              Text(
+                "${languages['version']![selectedLanguage]} 1.0.0",
+                style: const TextStyle(
+                  color: Colors.grey,
+                  fontSize: 18,
                 ),
               ),
-            ),
-            const SizedBox(height: 5),
-            Card(
-              elevation: 2,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ListTile(
-                      leading: Icon(Icons.vibration, color: kMainColor),
-                      title: Text(
-                        languages['vibration']![selectedLanguage],
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      trailing: CupertinoSwitch(
-                        activeColor: kMainColor,
-                        value: _vibrationValue,
-                        onChanged: (bool value) {
-                          setState(() {
-                            _vibrationValue = value;
-                          });
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 5),
-            Card(
-              elevation: 2,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: ListTile(
-                      leading: Icon(CupertinoIcons.globe, color: kMainColor),
-                      title: Text(
-                        languages['language']![selectedLanguage],
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  ),
-                  ListTile(
-                    leading: Radio(
-                      activeColor: kMainColor,
-                      value: "en",
-                      groupValue: _languageValue,
-                      onChanged: (value) {
-                        setState(() {
-                          _languageValue = value;
-                        });
-                      },
-                    ),
-                    title: Text(languages['english']![selectedLanguage]),
-                  ),
-                  ListTile(
-                    leading: Radio(
-                      activeColor: kMainColor,
-                      value: "uz",
-                      groupValue: _languageValue,
-                      onChanged: (value) {
-                        setState(() {
-                          _languageValue = value;
-                        });
-                      },
-                    ),
-                    title: Text(languages['uzbek']![selectedLanguage]),
-                  ),
-                  ListTile(
-                    leading: Radio(
-                      activeColor: kMainColor,
-                      value: "tr",
-                      groupValue: _languageValue,
-                      onChanged: (value) {
-                        setState(() {
-                          _languageValue = value;
-                        });
-                      },
-                    ),
-                    title: Text(languages['turkish']![selectedLanguage]),
-                  ),
-                  ListTile(
-                    leading: Radio(
-                      activeColor: kMainColor,
-                      value: "ru",
-                      groupValue: _languageValue,
-                      onChanged: (value) {
-                        setState(() {
-                          _languageValue = value;
-                        });
-                      },
-                    ),
-                    title: Text(languages['russian']![selectedLanguage]),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 3,
-                    child: Text(
-                      languages['locate']![selectedLanguage],
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ),
-                  // Expanded(child: Container()),
-                  Expanded(
-                    flex: 1,
-                    child: CupertinoButton(
-                      padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
-                      color: kMainColor, // CupertinoColors.activeBlue,
-                      onPressed: () {
-                        setState(() {
-                          _onLeftValue = !_onLeftValue;
-                        });
-                      },
-                      child: Text(
-                        _onLeftValue
-                            ? languages['left']![selectedLanguage]
-                            : languages['right']![selectedLanguage],
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            // CupertinoSlidingSegmentedControl(
-            //   children: const {
-            //     true: Text("LEFT"),
-            //     false: Text("RIGHT"),
-            //   },
-            //   groupValue: _onLeftValue,
-            //   onValueChanged: (value) {
-            //     setState(() {
-            //       _onLeftValue = value!;
-            //     });
-            //   },
-            // ),
-            const SizedBox(height: 50),
-            Text(
-              "${languages['version']![selectedLanguage]} 1.0.0",
-              style: const TextStyle(
-                color: Colors.grey,
-                fontSize: 18,
-              ),
-            ),
-            const SizedBox(height: 10),
-          ],
+              const SizedBox(height: 10),
+            ],
+          ),
         ),
       ),
     );
