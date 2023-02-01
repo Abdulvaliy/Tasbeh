@@ -41,7 +41,7 @@ class Background extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: size.height / 2 - 230,
+            top: size.height / 2 - 300,
             child: Text(
               '${leap}x$selectedLeap',
               style: TextStyle(
